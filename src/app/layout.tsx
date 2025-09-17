@@ -41,6 +41,11 @@ export const metadata: Metadata = {
     shortcut: "/icon512_maskable.png"
   },
   manifest: "/manifest.json",
+  viewport: "width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover",
+  appleWebApp: {
+    title: "apple-mobile-web-app-status-bar-style",
+    statusBarStyle: "black-translucent",
+  },
   themeColor: "#ffffff",
   category: "app",
   alternates: {
@@ -51,23 +56,10 @@ export const metadata: Metadata = {
   }
 }
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode
-}>) {
+export default function RootLayout({children}: Readonly<{children: React.ReactNode}>) {
   return (
     <html lang="en">
-      <head>
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <meta name="application-name" content="Hakaton App" />
-        <meta name="apple-mobile-web-app-capable" content="yes" />
-        <meta name="apple-mobile-web-app-status-bar-style" content="default" />
-        <meta name="apple-mobile-web-app-title" content="Hakaton App" />
-        <meta name="mobile-web-app-capable" content="yes" />
-        <meta name="msapplication-TileColor" content="#ffffff" />
-      </head>
       <body>{children}</body>
     </html>
   )
-}
+};

@@ -1,13 +1,11 @@
-// версию кэша обновляй при изменениях
 const CACHE_NAME = "pwa-cache-v1";
 const PRECACHE_URLS = [
-  "/",           // кешировать главную
+  "/",           
   "/offline.html",
   "/icons/icon-192x192.png",
   "/icons/icon-512x512.png"
 ];
 
-// install: предзагрузка основных файлов
 self.addEventListener("install", (event) => {
   event.waitUntil(
     caches.open(CACHE_NAME).then((cache) => cache.addAll(PRECACHE_URLS))
@@ -15,7 +13,6 @@ self.addEventListener("install", (event) => {
   self.skipWaiting();
 });
 
-// activate: удаляем старые кэши
 self.addEventListener("activate", (event) => {
   event.waitUntil(
     caches.keys().then((keys) =>
@@ -27,11 +24,9 @@ self.addEventListener("activate", (event) => {
   self.clients.claim();
 });
 
-// fetch: network-first для API, cache-first для статических
 self.addEventListener("fetch", (event) => {
   const url = new URL(event.request.url);
   if (url.origin === location.origin && url.pathname.startsWith("/api")) {
-    // network-first для API
     event.respondWith(
       fetch(event.request)
         .then((res) => {
@@ -44,13 +39,11 @@ self.addEventListener("fetch", (event) => {
     return;
   }
 
-  // для всего остального — cache-first
   event.respondWith(
     caches.match(event.request).then((cached) => cached || fetch(event.request).catch(() => caches.match("/offline.html")))
   );
 });
 
-// Push: показываем уведомление (если используешь push)
 self.addEventListener("push", (event) => {
   if (!event.data) return;
   const data = event.data.json();
@@ -64,7 +57,6 @@ self.addEventListener("push", (event) => {
   event.waitUntil(self.registration.showNotification(title, options));
 });
 
-// notification click: открываем/фокусируем окно
 self.addEventListener("notificationclick", (event) => {
   event.notification.close();
   const urlToOpen = event.notification.data || "/";

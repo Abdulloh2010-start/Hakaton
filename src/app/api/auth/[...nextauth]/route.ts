@@ -28,11 +28,11 @@ export const authOptions: AuthOptions = {
         port: 465,
         secure: true,
         auth: {
-          user: process.env.EMAIL_SERVER_USER,
-          pass: process.env.EMAIL_SERVER_PASSWORD,
+          user: process.env.EMAIL_SERVER_USER!,
+          pass: process.env.EMAIL_SERVER_PASSWORD!,
         },
       },
-      from: process.env.EMAIL_FROM,
+      from: process.env.EMAIL_FROM!,
     }),
   ],
   pages: {
@@ -42,7 +42,7 @@ export const authOptions: AuthOptions = {
     async session({ session }) {
       return session;
     },
-    async redirect({ url, baseUrl }) {
+    async redirect({ baseUrl }) {
       return `${baseUrl}/profile`;
     },
   },

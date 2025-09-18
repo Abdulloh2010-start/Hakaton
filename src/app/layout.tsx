@@ -26,21 +26,25 @@ export const metadata: Metadata = {
   },
   icons: {
     icon: [
-      { url: "/icon192.png", sizes: "192x192", type: "image/png" },
       { url: "/icon512_rounded.png", sizes: "512x512", type: "image/png" },
     ],
     apple: [{ url: "/icon512_rounded.png", sizes: "180x180", type: "image/png" }],
     shortcut: "/icon512_maskable.png",
   },
-  viewport: { width: "device-width", initialScale: 1, maximumScale: 1, userScalable: false, viewportFit: "cover" },
   appleWebApp: { title: "Hakaton App", statusBarStyle: "black-translucent" },
-  themeColor: "#ffffff",
   category: "app",
   alternates: {
     canonical: "https://hakaton-iota.vercel.app",
     languages: { "en-US": "https://hakaton-iota.vercel.app/en" },
   },
 };
+
+export const viewport = {
+  themeColor: "#000000",
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 1,
+}
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (

@@ -10,4 +10,4 @@ interface ClientSessionProviderProps {
 
 export default function ClientSessionProvider({ children, session }: ClientSessionProviderProps) {
   return <SessionProvider session={session}>{children}</SessionProvider>;
-}
+};

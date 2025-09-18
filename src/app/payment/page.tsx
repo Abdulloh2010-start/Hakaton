@@ -1,5 +1,5 @@
-import "@/styles/Payment.scss";
 import type { Metadata } from "next";
+import PaymentComponent from "./payment";
 
 export const metadata: Metadata = {
   title: "Оплата | Hakaton",
@@ -15,14 +15,5 @@ export const metadata: Metadata = {
 };
 
 export default function Payment() {
-  return (
-    <div className="payment-page">
-      <h1>Оплата</h1>
-      <p>Выберите способ оплаты и следуйте инструкциям.</p>
-      <div className="payment-buttons">
-        <button>Payme</button>
-        <button>Click</button>
-      </div>
-    </div>
-  );
-}
+    return <PaymentComponent /> ;
+};

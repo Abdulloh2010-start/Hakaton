@@ -32,6 +32,7 @@ export const metadata: Metadata = {
     apple: [{ url: "/icon512_rounded.png", sizes: "180x180", type: "image/png" }],
     shortcut: "/icon512_maskable.png",
   },
+  manifest: "/manifest.json",
   viewport: { width: "device-width", initialScale: 1, maximumScale: 1, userScalable: false, viewportFit: "cover" },
   appleWebApp: { title: "Hakaton App", statusBarStyle: "black-translucent" },
   themeColor: "#ffffff",

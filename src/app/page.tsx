@@ -1,5 +1,19 @@
 import "@/styles/Home.scss";
 import Link from "next/link";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Главная | Hakaton",
+  description: "Добро пожаловать на сайт Hakaton! 🚀",
+  keywords: ["Hakaton", "главная", "проект", "Next.js", "PWA"],
+  openGraph: {
+    title: "Главная | Hakaton",
+    description: "Добро пожаловать на сайт Hakaton! 🚀",
+    url: "https://hakaton.vercel.app/",
+    siteName: "Hakaton",
+    images: ["/icon512_rounded.png"],
+  },
+};
 
 export default function Home() {
   return (

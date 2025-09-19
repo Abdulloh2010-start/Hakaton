@@ -5,16 +5,17 @@ export async function POST(req: Request) {
     const formData = await req.formData();
     const formSubmitUrl = "https://formsubmit.io/send/sobirjonova757@gmail.com";
 
-    const urlSearchParams = new URLSearchParams(formData as any);
+    const entries = Array.from(formData.entries()) as [string, string][];
+    const urlSearchParams = new URLSearchParams(entries);
     const body = urlSearchParams.toString();
 
     const res = await fetch(formSubmitUrl, {
       method: "POST",
       headers: {
         "Content-Type": "application/x-www-form-urlencoded",
-        "Accept": "application/json",
+        Accept: "application/json",
       },
-      body: body,
+      body,
     });
 
     if (!res.ok) {

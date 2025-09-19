@@ -24,6 +24,7 @@ export default function FeedbackPage() {
       form.reset();
     } catch (err) {
       setStatus("error");
+      console.log(err)
     }
   };
 

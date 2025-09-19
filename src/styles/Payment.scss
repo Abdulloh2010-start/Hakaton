@@ -1,45 +1,110 @@
 :root {
-  --bg-color: #fefefe;
-  --text-color: #1e2022;
-  --primary-color: #4f9cf9;
-  --btn-hover: #1a73e8;
+  --bg-light: linear-gradient(135deg, #fefefe, #e0e7ff);
+  --bg-dark: linear-gradient(135deg, #0f172a, #1e293b);
+  --primary-color: #10b981;
+  --primary-glow: rgba(16, 185, 129, 0.5);
+  --btn-hover: #059669;
+  --text-light: #1e2022;
+  --text-dark: #f8fafc;
+}
+
+[data-theme="light"] {
+  --bg-color: var(--bg-light);
+  --text-color: var(--text-light);
+}
+
+[data-theme="dark"] {
+  --bg-color: var(--bg-dark);
+  --text-color: var(--text-dark);
 }
 
 .payment-page {
-  min-height: 80vh;
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 1rem;
-  background-color: var(--bg-color);
-  padding: 2rem;
+  gap: 2rem;
+  background: var(--bg-color);
+  padding: 3rem 2rem;
+  animation: fadeIn 1s ease;
 
   h1 {
-    color: var(--text-color);
-    margin-bottom: 0.5rem;
+    font-size: 2.5rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    background: linear-gradient(90deg, #10b981, #3b82f6);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: slideDown 0.8s ease;
   }
 
   p {
-    color: #555;
+    color: var(--text-color);
+    font-size: 1.1rem;
+    animation: fadeIn 1.3s ease;
   }
 
   .payment-buttons {
     display: flex;
-    gap: 1rem;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1.5rem;
 
     button {
-      padding: 0.6rem 1.2rem;
-      border-radius: 0.5rem;
+      padding: 1rem 2rem;
+      border-radius: 0.8rem;
       border: none;
-      background-color: var(--primary-color);
+      font-size: 1.1rem;
+      font-weight: 600;
       color: white;
+      background: var(--primary-color);
       cursor: pointer;
-      transition: 0.2s;
+      box-shadow: 0 5px 20px var(--primary-glow);
+      transition: transform 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
+      position: relative;
+      overflow: hidden;
 
       &:hover {
-        background-color: var(--btn-hover);
+        background: var(--btn-hover);
+        transform: translateY(-4px) scale(1.05);
+        box-shadow: 0 8px 30px var(--primary-glow);
+      }
+
+      &:active {
+        transform: scale(0.95);
+      }
+
+      /* ✨ shine эффект */
+      &::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(120deg, transparent, rgba(255,255,255,0.4), transparent);
+        transform: skewX(-20deg);
+      }
+
+      &:hover::after {
+        animation: shine 1s forwards;
       }
     }
   }
+}
+
+@keyframes fadeIn {
+  from {opacity: 0;}
+  to {opacity: 1;}
+}
+
+@keyframes slideDown {
+  from {transform: translateY(-20px); opacity: 0;}
+  to {transform: translateY(0); opacity: 1;}
+}
+
+@keyframes shine {
+  from {left: -100%;}
+  to {left: 100%;}
 }

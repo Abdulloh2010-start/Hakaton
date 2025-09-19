@@ -2,8 +2,8 @@ import type { MetadataRoute } from "next";
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: "PWA",
-    short_name: "PWA",
+    name: "Hakaton app",
+    short_name: "Hakaton app",
     description: "",
     start_url: "/",
     display: "standalone",

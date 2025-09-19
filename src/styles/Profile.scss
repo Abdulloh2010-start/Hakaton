@@ -1,71 +1,153 @@
 :root {
-  --bg-color: #fefefe;
-  --text-color: #1e2022;
-  --primary-color: #4f9cf9;
+  --bg-light: linear-gradient(135deg, #fefefe, #e0e7ff);
+  --bg-dark: linear-gradient(135deg, #0f172a, #1e293b);
+  --primary-color: #6366f1;
+  --primary-glow: rgba(99, 102, 241, 0.5);
+  --btn-hover: #4f46e5;
+  --text-light: #1e2022;
+  --text-dark: #f8fafc;
+  --card-light: #ffffff;
+  --card-dark: rgba(255, 255, 255, 0.05);
+}
+
+[data-theme="light"] {
+  --bg-color: var(--bg-light);
+  --text-color: var(--text-light);
+  --card-bg: var(--card-light);
   --border-color: #ddd;
-  --btn-hover: #1a73e8;
+}
+
+[data-theme="dark"] {
+  --bg-color: var(--bg-dark);
+  --text-color: var(--text-dark);
+  --card-bg: var(--card-dark);
+  --border-color: rgba(255, 255, 255, 0.15);
 }
 
 .profile-page {
-  min-height: 80vh;
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 2rem;
-  background-color: var(--bg-color);
+  padding: 3rem 2rem;
+  background: var(--bg-color);
   text-align: center;
+  animation: fadeIn 1s ease;
 
   h1 {
-    margin-bottom: 1rem;
-    color: var(--text-color);
+    margin-bottom: 2rem;
+    font-size: 2.5rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    background: linear-gradient(90deg, #6366f1, #ec4899);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: slideDown 0.8s ease;
   }
 
   .user-info {
-    background: #fff;
+    background: var(--card-bg);
     border: 1px solid var(--border-color);
-    border-radius: 0.8rem;
-    padding: 1.5rem;
-    margin-bottom: 1.5rem;
+    border-radius: 1rem;
+    padding: 2rem;
+    margin-bottom: 2rem;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 0.5rem;
+    gap: 1rem;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    animation: scaleUp 0.9s ease;
+
+    &:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 35px rgba(0,0,0,0.25);
+    }
 
     .avatar {
-      width: 100px;
-      height: 100px;
+      width: 120px;
+      height: 120px;
       border-radius: 50%;
       object-fit: cover;
-      margin-bottom: 1rem;
+      border: 3px solid var(--primary-color);
+      box-shadow: 0 0 15px var(--primary-glow);
+      animation: pulse 2.5s infinite;
     }
 
     p {
+      font-size: 1.1rem;
+      color: var(--text-color);
+
       span {
-        font-weight: 600;
+        font-weight: 700;
+        color: var(--primary-color);
       }
-      color: #333;
     }
   }
 
-  .logout-btn {
-    padding: 0.6rem 1.5rem;
-    border: none;
-    border-radius: 0.5rem;
-    background-color: var(--primary-color);
-    color: white;
-    cursor: pointer;
-    transition: 0.2s;
+  .actions {
+    display: flex;
+    gap: 1rem;
 
-    &:hover {
-      background-color: var(--btn-hover);
+    .logout-btn, .theme-btn {
+      padding: 0.8rem 1.5rem;
+      border: none;
+      border-radius: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      cursor: pointer;
+      color: white;
+      background: var(--primary-color);
+      box-shadow: 0 4px 15px var(--primary-glow);
+      transition: transform 0.3s ease, background 0.3s ease;
+
+      &:hover {
+        background: var(--btn-hover);
+        transform: translateY(-3px) scale(1.05);
+        box-shadow: 0 6px 25px var(--primary-glow);
+      }
+
+      &:active {
+        transform: scale(0.95);
+      }
+    }
+
+    .theme-btn {
+      background: linear-gradient(90deg, #6366f1, #ec4899);
     }
   }
 }
 
 .loading {
-  color: #555;
+  color: var(--text-color);
   font-size: 2rem;
   margin-top: 25%;
   text-align: center;
-  align-content: center;
+  animation: blink 1.5s infinite;
+}
+
+@keyframes fadeIn {
+  from {opacity: 0;}
+  to {opacity: 1;}
+}
+
+@keyframes slideDown {
+  from {transform: translateY(-20px); opacity: 0;}
+  to {transform: translateY(0); opacity: 1;}
+}
+
+@keyframes scaleUp {
+  from {transform: scale(0.9); opacity: 0;}
+  to {transform: scale(1); opacity: 1;}
+}
+
+@keyframes pulse {
+  0% {box-shadow: 0 0 10px var(--primary-glow);}
+  50% {box-shadow: 0 0 25px var(--primary-glow);}
+  100% {box-shadow: 0 0 10px var(--primary-glow);}
+}
+
+@keyframes blink {
+  0%, 100% {opacity: 1;}
+  50% {opacity: 0.5;}
 }

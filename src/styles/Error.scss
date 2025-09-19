@@ -1,0 +1,41 @@
+.error-page {
+  min-height: 80vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  text-align: center;
+  background: linear-gradient(135deg, #ff416c, #ff4b2b);
+  color: white;
+  padding: 2rem;
+
+  h1 {
+    font-size: 3rem;
+  }
+
+  p {
+    font-size: 1.2rem;
+    opacity: 0.9;
+  }
+
+  .actions {
+    display: flex;
+    gap: 1rem;
+
+    button, a {
+      padding: 0.6rem 1.2rem;
+      border-radius: 8px;
+      border: none;
+      text-decoration: none;
+      background: white;
+      color: #ff416c;
+      font-weight: bold;
+      transition: 0.2s;
+
+      &:hover {
+        background: #ffe6ec;
+      }
+    }
+  }
+}

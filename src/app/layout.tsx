@@ -51,7 +51,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
-            <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded" rel="stylesheet" />
+        <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:wght@400&display=swap" rel="stylesheet" />
       </head>
       <body>
         <ClientSessionProvider>

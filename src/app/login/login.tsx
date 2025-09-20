@@ -1,65 +1,108 @@
 "use client";
 import { useState, FormEvent, ChangeEvent } from "react";
 import { signIn } from "next-auth/react";
-import "@/styles/Login.scss";
 import Link from "next/link";
+import "@/styles/Login.scss";
 
-export default function LoginComponent() {
-  const [email, setEmail] = useState<string>("");
-  const [loading, setLoading] = useState<boolean>(false);
+export default function AuthPage() {
+  const [email, setEmail] = useState("");
+  const [mode, setMode] = useState<"login" | "register" | "verify">("login");
+  const [loading, setLoading] = useState(false);
 
-  const onEmail = async (e: FormEvent<HTMLFormElement>) => {
+  const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLoading(true);
 
-    const res = await signIn("email", {
-      email,
-      redirect: true,
-      callbackUrl: "/profile",
-    });
+    if (mode === "login" || mode === "register") {
+      const res = await signIn("email", {
+        email,
+        redirect: true,
+        callbackUrl: "/profile",
+      });
+      setLoading(false);
 
-    setLoading(false);
-
-    if (res?.ok) {
-      alert("Проверь почту — ссылка отправлена.");
-    } else {
-      alert("Ошибка, попробуйте снова.");
+      if (res?.ok) {
+        setMode("verify");
+      } else {
+        alert("Ошибка, попробуйте снова");
+      }
     }
   };
 
-  const signInProvider = async (provider: "google" | "github" | "facebook") => {
-    await signIn(provider, { callbackUrl: "/profile" });
-  };
-
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => setEmail(e.target.value);
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) =>
+    setEmail(e.target.value);
 
   return (
-    <div className="login-page">
-      <h1>Вход</h1>
+    <div className="auth-page">
+      <div className="auth-card">
+        <h1>
+          {mode === "login"
+            ? "Вход"
+            : mode === "register"
+            ? "Регистрация"
+            : "Подтверди email"}
+        </h1>
 
-      <div className="providers">
-        <button onClick={() => signInProvider("google")}>Google</button>
-        <button onClick={() => signInProvider("github")}>GitHub</button>
-        <button onClick={() => signInProvider("facebook")}>Facebook</button>
+        {mode !== "verify" && (
+          <form onSubmit={onSubmit} className="auth-form">
+            <label>
+              Email
+              <input
+                type="email"
+                placeholder="you@mail.com"
+                value={email}
+                onChange={handleChange}
+                required
+              />
+            </label>
+            <button type="submit" disabled={loading}>
+              {loading
+                ? "Отправляем..."
+                : mode === "login"
+                ? "Войти"
+                : "Зарегистрироваться"}
+            </button>
+          </form>
+        )}
+
+        {mode === "verify" && (
+          <p className="verify-msg">
+            Мы отправили ссылку для входа на <b>{email}</b>. Проверь почту ✉️
+          </p>
+        )}
+
+        {mode !== "verify" && (
+          <div className="switch-mode">
+            {mode === "login" ? (
+              <p>
+                Нет аккаунта?{" "}
+                <button onClick={() => setMode("register")}>Регистрация</button>
+              </p>
+            ) : (
+              <p>
+                Уже есть аккаунт?{" "}
+                <button onClick={() => setMode("login")}>Войти</button>
+              </p>
+            )}
+          </div>
+        )}
+
+        <div className="providers">
+          <button onClick={() => signIn("google", { callbackUrl: "/profile" })}>
+            Войти через Google
+          </button>
+          <button onClick={() => signIn("github", { callbackUrl: "/profile" })}>
+            Войти через GitHub
+          </button>
+          <button
+            onClick={() => signIn("facebook", { callbackUrl: "/profile" })}
+          >
+            Войти через Facebook
+          </button>
+        </div>
+
+        <Link href="/">← На главную</Link>
       </div>
-
-      <Link href="/">Home</Link>
-
-      <form onSubmit={onEmail}>
-        <label>
-          Email
-          <input
-            type="email"
-            placeholder="you@mail.com"
-            value={email}
-            onChange={handleChange}
-            required
-          />
-        </label>
-        <button type="submit" disabled={loading}>
-          {loading ? "Отправляем..." : "Войти по email"}
-        </button>
-      </form>
     </div>
   );
-};
+}

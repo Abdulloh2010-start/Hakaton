@@ -3,26 +3,11 @@ import { useSession, signOut } from "next-auth/react";
 import Image from "next/image";
 import "@/styles/Profile.scss";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useTheme } from "next-themes";
 
 export default function ProfileComponent() {
   const { data: session, status } = useSession();
-  const [theme, setTheme] = useState<"light" | "dark">("light");
-
-  useEffect(() => {
-    const saved = localStorage.getItem("theme") as "light" | "dark" | null;
-    const preferred =
-      saved || (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
-    setTheme(preferred);
-    document.documentElement.setAttribute("data-theme", preferred);
-  }, []);
-
-  const toggleTheme = () => {
-    const next = theme === "dark" ? "light" : "dark";
-    setTheme(next);
-    document.documentElement.setAttribute("data-theme", next);
-    localStorage.setItem("theme", next);
-  };
+  const { theme, setTheme } = useTheme();
 
   if (status === "loading") return <p className="loading">Загрузка...</p>;
   if (!session)
@@ -59,10 +44,13 @@ export default function ProfileComponent() {
         <button className="logout-btn" onClick={() => signOut({ callbackUrl: "/" })}>
           Выйти
         </button>
-        <button className="theme-btn" onClick={toggleTheme}>
+        <button
+          className="theme-btn"
+          onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+        >
           {theme === "dark" ? "☀️ Светлая" : "🌙 Тёмная"}
         </button>
       </div>
     </div>
   );
-};
+}

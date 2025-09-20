@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import ClientSessionProvider from "@/app/providers/ClientSessionProvider";
+import Chatbot from "@/components/Chatbot";
 
 export const metadata: Metadata = {
   title: "Hakaton App",
@@ -48,9 +49,15 @@ export const viewport = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
+      <head>
+            <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded" rel="stylesheet" />
+      </head>
       <body>
-        <ClientSessionProvider>{children}</ClientSessionProvider>
+        <ClientSessionProvider>
+          {children}
+          <Chatbot />
+        </ClientSessionProvider>
       </body>
     </html>
   );
